@@ -514,3 +514,42 @@ input,select,textarea{background:#041F3D;color:#EAFBFF;border-color:rgba(0,230,2
   .sws-demo-float,.sws-demo-video.is-playing .sws-demo-video-orb,.sws-demo-video.is-playing .sws-demo-video-overlay,.sws-demo-video.is-playing .sws-demo-playhead { animation:none !important; }
   .sws-lab-tab { transition:none; }
 }
+
+
+/* SWS Project Builder — responsive service estimator, no dependencies */
+.project-estimator-section { scroll-margin-top:95px; }
+.project-estimator-section .section-heading { margin-bottom:25px; }
+.project-estimator-section .section-heading .hl { padding:.02em .22em; }
+.project-estimator-grid { display:grid; grid-template-columns:minmax(0,1.14fr) minmax(290px,.86fr); gap:20px; align-items:stretch; }
+.project-estimator-options,.project-estimator-result { border:1px solid rgba(0,230,245,.22); border-radius:23px; padding:clamp(19px,3vw,30px); }
+.project-estimator-options { background:var(--surface); display:grid; align-content:start; gap:24px; }
+.estimator-field { margin:0; padding:0; min-width:0; border:0; }
+.estimator-field-head { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.estimator-field-head label,.estimator-field legend,.estimator-field-split label { display:block; color:var(--ink); font-weight:700; font-size:15px; margin:0 0 11px; }
+.estimator-field-head output { color:#19deee; background:rgba(0,230,245,.08); border:1px solid rgba(0,230,245,.35); border-radius:9px; padding:5px 12px; min-width:41px; text-align:center; font-weight:800; }
+#estimate-pages { display:block; width:100%; height:26px; margin:14px 0 3px; accent-color:#00E6F5; cursor:pointer; }
+.estimator-range-ends { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:12px; color:var(--muted); }
+.estimator-features { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+.estimator-features legend { grid-column:1/-1; float:none; padding:0; width:100%; }
+.estimator-features label { display:flex; align-items:center; gap:9px; padding:12px; cursor:pointer; border:1px solid var(--line); border-radius:12px; background:rgba(70,140,180,.045); color:var(--ink); font-size:13px; line-height:1.35; }
+.estimator-features label:has(input:checked) { border-color:rgba(0,230,245,.6); background:rgba(0,230,245,.08); }
+.estimator-features input { accent-color:#00E6F5; flex:none; width:17px; height:17px; }
+.estimator-field-split { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.estimator-field-split select { width:100%; min-width:0; min-height:46px; padding:9px 10px; border:1px solid var(--line); border-radius:11px; background:var(--surface2); color:var(--ink); font:500 13px/1.3 "Golos Text",sans-serif; }
+.project-estimator-result { display:flex; flex-direction:column; background:radial-gradient(circle at 85% 6%,rgba(0,230,245,.14),transparent 46%),linear-gradient(145deg,#041c34,#061326); color:#ecfaff; }
+.project-estimator-result .eyebrow { color:#60eaf4; font-size:11px; letter-spacing:.15em; margin:0 0 12px; }
+.project-estimator-result h3 { color:#f4fcff; font-size:clamp(24px,3.1vw,32px); margin:0 0 24px; }
+.estimator-price-label { font-size:13px; color:#a1bfcf; }
+.estimator-price { color:#6af3fa; font:800 clamp(30px,4vw,46px)/1.2 Geologica,sans-serif; margin:8px 0 12px; }
+.estimator-explanation { color:#aac7d7; font-size:13px; line-height:1.55; margin-bottom:19px; }
+.estimator-summary { padding:16px 0 19px; margin:0 0 18px; list-style:none; border-top:1px solid rgba(105,228,245,.17); display:grid; gap:11px; }
+.estimator-summary li { display:flex; gap:9px; align-items:flex-start; font-size:13px; color:#d5edf7; line-height:1.4; }
+.estimator-summary li::before { content:"✓"; color:#6af3fa; font-weight:800; }
+.estimator-actions { margin-top:auto; display:grid; gap:10px; }
+.estimator-actions .btn { width:100%; min-height:48px; font-size:14px; }
+#estimate-copy-status { color:#9cdce5; min-height:18px; margin:10px 0 0; }
+.estimator-disclaimer { margin-top:17px; max-width:970px; }
+.sws-home-estimate { display:inline-flex; align-items:center; gap:8px; margin-top:17px; color:#69e7f5; font-size:14px; text-decoration:none; border-bottom:1px solid rgba(105,231,245,.3); padding-bottom:3px; }
+.sws-home-estimate:hover { border-bottom-color:#69e7f5; }
+@media(max-width:860px) { .project-estimator-grid { grid-template-columns:1fr; }.project-estimator-result h3 { margin-bottom:14px; } }
+@media(max-width:460px) { .project-estimator-options,.project-estimator-result { border-radius:16px; padding:17px; } .estimator-features { grid-template-columns:1fr; gap:8px; } .estimator-field-split { grid-template-columns:1fr; gap:14px; } .estimator-features label { min-height:45px; }.project-estimator-options { gap:20px; } }
