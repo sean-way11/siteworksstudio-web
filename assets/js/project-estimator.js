@@ -14,6 +14,8 @@
   var details = document.getElementById("estimate-details");
   var link = document.getElementById("estimate-link");
   var copy = document.getElementById("estimate-copy");
+  var share = document.getElementById("estimate-share");
+  var exportButton = document.getElementById("estimate-export");
   var status = document.getElementById("estimate-copy-status");
   if (!pages || !pageCount || !material || !priority || !price || !kind || !commentary || !details || !link || !copy) return;
 
@@ -35,6 +37,25 @@
     flexible: "Срок гибкий"
   };
   var lastText = "";
+  // Public parameters only: these contain no personal/contact information.
+  var params = new URLSearchParams(window.location.search);
+  var requestedCount = Number(params.get("epages"));
+  if (Number.isInteger(requestedCount) && requestedCount >= 1 && requestedCount <= 12) pages.value = String(requestedCount);
+  if (["ready","partial","none"].indexOf(params.get("ematerials")) !== -1) material.value = params.get("ematerials");
+  if (["standard","soon","flexible"].indexOf(params.get("epriority")) !== -1) priority.value = params.get("epriority");
+  var requestedExtras = (params.get("eextras") || "").split(",");
+  extras.forEach(function (input) { input.checked = requestedExtras.indexOf(input.value) !== -1; });
+  function shareLink() {
+    var url = new URL(window.location.href);
+    url.searchParams.set("epages", String(pages.value));
+    url.searchParams.set("ematerials", material.value);
+    url.searchParams.set("epriority", priority.value);
+    var checked = extras.filter(function (input) { return input.checked; }).map(function (input) { return input.value; });
+    if (checked.length) url.searchParams.set("eextras", checked.join(","));
+    else url.searchParams.delete("eextras");
+    url.hash = "project-estimator";
+    return url.href;
+  }
   function createItem(text) {
     var item = document.createElement("li");
     item.textContent = text;
@@ -67,7 +88,7 @@
       (materialsLabels[material.value] || materialsLabels.partial) + ". " +
       (priorityLabels[priority.value] || priorityLabels.standard) + ". " +
       "Цена: " + baseline + " (не окончательная).";
-    link.href = "order.html?service=" + encodeURIComponent(service) + "&scope=" + encodeURIComponent(lastText);
+    link.href = "order.html?service=" + encodeURIComponent(service) + "&briefNote=" + encodeURIComponent(lastText.slice(0,445));
     if (status) status.textContent = "";
   }
   function legacyCopy(value) {
@@ -98,6 +119,37 @@
     } else {
       if (status) status.textContent = legacyCopy(lastText) ? "Параметры скопированы." : "Не удалось скопировать. Используйте кнопку перехода к заявке.";
     }
+  });
+  if (share) share.addEventListener("click", function () {
+    var address = shareLink();
+    if (navigator.share) {
+      navigator.share({title:"Расчёт проекта SiteWorksStudio",text:lastText,url:address}).then(function () {
+        if(status) status.textContent="Расчёт готов к отправке.";
+      }).catch(function (err) {
+        if(err && err.name==="AbortError")return;
+        if(status)status.textContent="Не удалось открыть меню отправки. Скопируйте параметры вручную.";
+      });
+    } else if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+      navigator.clipboard.writeText(address).then(function () {
+        if(status)status.textContent="Ссылка на ваш расчёт скопирована ✓";
+      }).catch(function () {
+        if(status)status.textContent=legacyCopy(address)?"Ссылка на ваш расчёт скопирована ✓":"Не удалось скопировать ссылку.";
+      });
+    } else {
+      if(status)status.textContent=legacyCopy(address)?"Ссылка на ваш расчёт скопирована ✓":"Не удалось скопировать ссылку.";
+    }
+  });
+  if (exportButton) exportButton.addEventListener("click", function () {
+    var blob = new Blob([lastText + "\n\nСсылка на расчёт: " + shareLink()], {type:"text/plain;charset=utf-8"});
+    var objectUrl = URL.createObjectURL(blob);
+    var anchor = document.createElement("a");
+    anchor.href = objectUrl;
+    anchor.download = "SiteWorksStudio-raschet.txt";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    window.setTimeout(function () { URL.revokeObjectURL(objectUrl); }, 1000);
+    if(status)status.textContent="Расчёт сохранён в файл ✓";
   });
   update();
 })();
