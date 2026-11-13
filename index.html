@@ -38,8 +38,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@700;800&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
 <script src="assets/js/theme-init.js"></script>
 <link rel="stylesheet" href="assets/css/styles.css?v=notice-20261113">
+
+<style id="sws-maintenance-styles">
+/* Временный режим обслуживания: оригинальные страницы сохраняются в исходниках. */
+html,body{margin:0!important;min-height:100%!important;overflow:hidden!important}
+body>:not(#sws-maintenance-screen){display:none!important}
+#sws-maintenance-screen{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;box-sizing:border-box;overflow:auto;padding:24px;min-height:100vh;min-height:100dvh;background:radial-gradient(ellipse at 50% 25%,#103f5e 0%,#031a35 56%,#020e20 100%);color:#f4fbff;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:center}
+#sws-maintenance-screen *{box-sizing:border-box}
+#sws-maintenance-screen .sws-maintenance-card{width:100%;max-width:600px;padding:clamp(28px,6vw,56px) clamp(20px,5vw,42px);background:linear-gradient(145deg,rgba(17,55,81,.86),rgba(3,24,47,.96));border:1px solid rgba(0,230,245,.28);border-radius:24px;box-shadow:0 22px 70px rgba(0,7,22,.35)}
+#sws-maintenance-screen h1{margin:0 0 22px;padding:0;color:#67eff5;font-size:clamp(23px,5vw,36px);font-weight:800;line-height:1.15;letter-spacing:.05em;text-transform:uppercase}
+#sws-maintenance-screen p{margin:0;color:#e3f2fa;font-size:clamp(16px,2.4vw,20px);line-height:1.6;font-weight:400}
+@media(max-width:480px){#sws-maintenance-screen{padding:16px}#sws-maintenance-screen .sws-maintenance-card{border-radius:18px}}
+</style>
 </head>
 <body data-page="home">
+<div id="sws-maintenance-screen" role="main" aria-labelledby="sws-maintenance-title">
+  <div class="sws-maintenance-card">
+    <h1 id="sws-maintenance-title">ОБНОВЛЕНИЕ САЙТА</h1>
+    <p>На сайте ведутся технические работы. Спасибо за понимание.</p>
+  </div>
+</div>
+
 <a class="skip" href="#main">Перейти к содержимому</a>
 <header class="site-header" id="site-header">
   <div class="header-in">
