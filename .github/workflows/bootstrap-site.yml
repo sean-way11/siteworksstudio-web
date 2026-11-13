@@ -1,4 +1,4 @@
-name: Publish SiteWorksStudio (static)
+name: Sync SiteWorksStudio static files
 
 on:
   push:
@@ -10,24 +10,16 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: siteworksstudio-pages
-  cancel-in-progress: false
 
 jobs:
-  publish:
+  sync:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Import public SiteWorksStudio pages
         run: python3 .github/scripts/bootstrap_site.py
-      - name: Save independent snapshot in repository
+      - name: Commit safe static snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -35,23 +27,6 @@ jobs:
                   404.html robots.txt sitemap.xml .nojekyll README.md \
                   favicon.ico assets/
           if ! git diff --cached --quiet; then
-            git commit -m "Import public static site from SiteWorksStudio Tuqo"
+            git commit -m "Update public static SiteWorksStudio website"
             git push origin HEAD:main
           fi
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - name: Stage public files for Pages
-        run: |
-          mkdir -p _site
-          cp index.html about.html services.html portfolio.html order.html \
-             404.html robots.txt sitemap.xml .nojekyll favicon.ico _site/
-          cp -R assets _site/
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-      - name: Deploy GitHub Pages
-        id: deploy
-        uses: actions/deploy-pages@v4
