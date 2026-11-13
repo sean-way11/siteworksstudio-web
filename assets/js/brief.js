@@ -436,10 +436,8 @@ function initOrderPage() {
       submitLead.textContent = "Заявка отправлена ✓";
       removeDraft("Черновик удалён после успешной отправки.");
     } catch (err) {
-      var reason = err && err.message ? err.message : "";
-      status.textContent = (reason && !/^HTTP /.test(reason) && reason.length < 150)
-        ? reason + " Если проблема повторится, откройте Telegram вручную или скопируйте текст заявки."
-        : "Не удалось отправить заявку. Откройте Telegram вручную или скопируйте текст заявки.";
+      // Клиенту показываем только понятный результат, а не внутренние сообщения сервера.
+      status.textContent = "Не удалось отправить заявку. Попробуйте ещё раз или отправьте её через Telegram.";
       submitLead.disabled = false;
       submitLead.textContent = "Повторить отправку";
     }
