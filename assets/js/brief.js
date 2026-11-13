@@ -1,5 +1,5 @@
 /* brief.js: страница заказа. Нужен config.js перед ним.
-   Бриф формируется в браузере; отправка владельцу идёт через защищённый Pages Function. */
+   Бриф формируется в браузере; заявки сохраняются в SiteWorksStudio OS через Supabase Edge Function. */
 
 /* =====================================================================
    СХЕМА БРИФА. always = поле видно всегда; services = для каких услуг;
@@ -67,9 +67,9 @@ var BRIEF_SCHEMA = [
     hint: "Необязательно. Можно указать диапазон." },
   { id: "deadline", label: "Когда нужен результат", summaryLabel: "Срок",
     type: "select", required: false, options: DEADLINES },
-  { id: "contact", label: "Другой способ связи", summaryLabel: "Связь",
-    type: "text", required: false, maxLength: 80,
-    hint: "Телефон или e-mail, если не только Telegram." }
+  { id: "contact", label: "Как с вами связаться", summaryLabel: "Связь",
+    type: "text", required: true, maxLength: 80,
+    hint: "Обязательно: @Telegram, телефон или e-mail. Иначе мы не сможем ответить." }
 ];
 
 /* =====================================================================
@@ -157,6 +157,7 @@ function validateBrief(brief) {
     var v = brief[f.id];
     var empty = Array.isArray(v) ? v.length === 0 : !v;
     if (f.required && empty) { errors[f.id] = f.type === "select" ? "Выберите вариант" : "Заполните это поле"; return; }
+    if (f.id === "contact" && !empty && v.length < 4) { errors[f.id] = "Укажите контакт для ответа"; return; }
     if (f.type === "select" && !empty) {
       var allowed = f.optionsFrom === "orders" ? CONFIG.orderOptions : f.options;
       if (allowed.indexOf(v) === -1) errors[f.id] = "Выберите вариант из списка";
@@ -387,37 +388,55 @@ function initOrderPage() {
   });
 
 
-  // Tuqo hosts static files; submissions are stored by Tuqo Forms.
-  // SiteWorksStudio OS remains a separate application; no private API keys are in this file.
-  var tuqoFormShownAt = Date.now();
-  var tuqoSubmissionId = null;
+  // Публичная форма GitHub Pages: прием на выделенный Supabase endpoint студии.
+  // Секреты и доступ к базе находятся только на сервере. Повтор не создаёт дубли.
+  var siteSubmissionId = null;
   submitLead.addEventListener("click", async function () {
     var message = preview.value.trim();
+    var brief = readForm();
     if (!message) {
       status.textContent = "Сначала составьте бриф.";
       return;
     }
-    if (!tuqoSubmissionId) tuqoSubmissionId = crypto.randomUUID();
+    var errors = validateBrief(brief);
+    if (Object.keys(errors).length) {
+      status.textContent = "Проверьте контакт для связи и другие обязательные поля, затем составьте бриф ещё раз.";
+      result.hidden = true;
+      form.scrollIntoView({ block: "start" });
+      return;
+    }
+    if (!siteSubmissionId) siteSubmissionId = crypto.randomUUID();
+    var chosen = optionById(brief.service);
+    var serviceName = chosen ? chosen.title : brief.service;
     submitLead.disabled = true;
     submitLead.textContent = "Отправляем…";
-    status.textContent = "Сохраняем вашу заявку…";
+    status.textContent = "Сохраняем заявку в SiteWorksStudio OS…";
     try {
-      var response = await fetch("https://api.tuqo.ru/f/4af18e65-6855-4477-8a5e-6092e18ca762", {
+      var response = await fetch("https://aysvovhvsttfjfhigbjt.supabase.co/functions/v1/sws-public-site-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: brief.name,
+          service: serviceName,
+          contact: brief.contact,
           message: message,
           source: location.pathname,
-          _submit_time: tuqoFormShownAt,
-          _request_id: tuqoSubmissionId
+          _request_id: siteSubmissionId,
+          website: ""
         })
       });
-      if (!response.ok) throw new Error("Request not accepted: " + response.status);
-      status.textContent = "Заявка сохранена! Мы свяжемся с вами по указанному контакту. Для срочного ответа можно написать в Telegram.";
+      var answer = await response.json().catch(function () { return null; });
+      if (!response.ok || !answer || answer.ok !== true) {
+        throw new Error(answer && answer.error ? answer.error : "HTTP " + response.status);
+      }
+      status.textContent = "✅ Заявка сохранена в SiteWorksStudio OS! Мы свяжемся с вами по указанному контакту.";
       submitLead.textContent = "Заявка отправлена ✓";
       removeDraft("Черновик удалён после успешной отправки.");
     } catch (err) {
-      status.textContent = "Автоматическая отправка не сработала. Откройте Telegram вручную или скопируйте текст заявки.";
+      var reason = err && err.message ? err.message : "";
+      status.textContent = (reason && !/^HTTP /.test(reason) && reason.length < 150)
+        ? reason + " Если проблема повторится, откройте Telegram вручную или скопируйте текст заявки."
+        : "Не удалось отправить заявку. Откройте Telegram вручную или скопируйте текст заявки.";
       submitLead.disabled = false;
       submitLead.textContent = "Повторить отправку";
     }
