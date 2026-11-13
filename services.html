@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@700;800&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
 <script src="assets/js/theme-init.js"></script>
-<link rel="stylesheet" href="assets/css/styles.css?v=estimator-20261113">
+<link rel="stylesheet" href="assets/css/styles.css?v=estimator-tools-2">
 </head>
 <body data-page="services">
 <a class="skip" href="#main">Перейти к содержимому</a>
@@ -135,9 +135,14 @@
         </ul>
         <div class="estimator-actions">
           <a href="order.html?service=landing" id="estimate-link" class="btn">Перейти к заявке ↗</a>
-          <button type="button" class="btn btn-alt" id="estimate-copy">Скопировать параметры</button>
+          <div class="estimator-tools">
+            <button type="button" class="btn btn-alt" id="estimate-copy">Скопировать</button>
+            <button type="button" class="btn btn-alt" id="estimate-share">Поделиться</button>
+          </div>
+          <button type="button" class="btn btn-alt" id="estimate-export">Скачать расчёт (.txt)</button>
         </div>
         <p class="note" id="estimate-copy-status" role="status" aria-live="polite"></p>
+        <a class="estimator-ai-link" href="https://t.me/siteworksstudioaimanager_bot" target="_blank" rel="noopener noreferrer">🤖 Спросить AI-менеджера ↗</a>
       </aside>
     </div>
     <p class="note estimator-disclaimer">Расчёт носит ознакомительный характер. Стартовые цены совпадают с тарифами на этой странице. Дополнительные функции и финальная цена согласуются индивидуально. Для видеомонтажа и дизайна стоимость рассчитывается после брифа.</p>
@@ -198,7 +203,7 @@
 <script src="assets/js/config.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/project-guide.js" defer></script>
-<script src="assets/js/project-estimator.js?v=1" defer></script>
+<script src="assets/js/project-estimator.js?v=2" defer></script>
 <style>
 .tqf.tqf{position:fixed!important;z-index:2147483646!important;right:16px!important;bottom:16px!important;
 left:auto!important;top:auto!important;inset-inline-start:auto!important;
