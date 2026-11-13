@@ -148,6 +148,39 @@
     if (desktop.addEventListener) desktop.addEventListener("change", onChange); else desktop.addListener(onChange);
   }
 
+  /* ---------- Техническое обновление: единое уведомление на всех страницах ---------- */
+  function buildSiteNotice() {
+    var notice = CONFIG.siteNotice;
+    var header = document.getElementById("site-header");
+    if (!header || !notice || !notice.enabled || !notice.message) return;
+    var key = "sws-notice-dismissed-" + String(notice.id || "current");
+    try { if (sessionStorage.getItem(key) === "1") return; } catch (e) {}
+    var banner = el("aside", {
+      "class": "sws-tech-notice",
+      id: "sws-tech-notice",
+      "aria-label": "Информация об обновлении сайта"
+    });
+    var inner = el("div", { "class": "container sws-tech-notice-inner" });
+    var message = el("div", { "class": "sws-tech-notice-copy" });
+    message.appendChild(el("span", { "class": "sws-tech-notice-label" }, String(notice.label || "ОБНОВЛЕНИЕ")));
+    message.appendChild(el("span", { "class": "sws-tech-notice-text" }, String(notice.message)));
+    inner.appendChild(message);
+    if (notice.href && notice.linkLabel) {
+      inner.appendChild(el("a", { "class": "sws-tech-notice-link", href: String(notice.href) }, String(notice.linkLabel) + " ↗"));
+    }
+    var dismiss = el("button", {
+      type: "button", "class": "sws-tech-notice-close",
+      "aria-label": "Скрыть уведомление об обновлении"
+    }, "×");
+    dismiss.addEventListener("click", function () {
+      banner.remove();
+      try { sessionStorage.setItem(key, "1"); } catch (e) {}
+    });
+    inner.appendChild(dismiss);
+    banner.appendChild(inner);
+    header.insertAdjacentElement("afterend", banner);
+  }
+
   /* ---------- Подвал ---------- */
   function buildFooter() {
     var host = document.getElementById("site-footer");
@@ -199,6 +232,7 @@
 
   function init() {
     buildHeader();
+    buildSiteNotice();
     buildFooter();
     fillConfig();
     propagateTheme();
