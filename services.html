@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@700;800&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
 <script src="assets/js/theme-init.js"></script>
-<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/styles.css?v=estimator-20261113">
 </head>
 <body data-page="services">
 <a class="skip" href="#main">Перейти к содержимому</a>
@@ -52,6 +52,7 @@
     <li><a href="#sites">Создание сайтов</a></li>
     <li><a href="#video">Видеомонтаж</a></li>
     <li><a href="#design">Графический дизайн</a></li>
+    <li><a href="#project-estimator">Рассчитать сайт</a></li>
   </ul>
 </section>
 <div class="container">
@@ -79,6 +80,68 @@
     <a class="btn" href="order.html?service=design">Заказать графический дизайн</a>
   </section>
 
+  
+  <section class="svc project-estimator-section" id="project-estimator" aria-labelledby="estimator-title">
+    <div class="section-heading">
+      <p class="eyebrow">SWS PROJECT BUILDER</p>
+      <h2 id="estimator-title">Соберите свой проект <span class="hl">за минуту</span></h2>
+      <p class="lead">Укажите объём и нужные функции. Покажем стартовую стоимость подходящего формата и перенесём параметры в заявку.</p>
+    </div>
+    <div class="project-estimator-grid">
+      <div class="project-estimator-options">
+        <div class="estimator-field">
+          <div class="estimator-field-head"><label for="estimate-pages">Сколько страниц планируется?</label><output id="estimate-page-count" for="estimate-pages">1</output></div>
+          <input type="range" id="estimate-pages" min="1" max="12" value="1" step="1">
+          <div class="estimator-range-ends"><span>1 страница</span><span>12 страниц</span></div>
+        </div>
+        <fieldset class="estimator-field estimator-features">
+          <legend>Что ещё нужно в проекте?</legend>
+          <label><input type="checkbox" name="estimate-extra" value="booking"><span>Онлайн-запись</span></label>
+          <label><input type="checkbox" name="estimate-extra" value="shop"><span>Каталог или оплата</span></label>
+          <label><input type="checkbox" name="estimate-extra" value="integration"><span>Интеграции</span></label>
+          <label><input type="checkbox" name="estimate-extra" value="content"><span>Помощь с текстами</span></label>
+          <label><input type="checkbox" name="estimate-extra" value="unique"><span>Индивидуальный дизайн</span></label>
+        </fieldset>
+        <div class="estimator-field estimator-field-split">
+          <div>
+            <label for="estimate-materials">Материалы</label>
+            <select id="estimate-materials">
+              <option value="ready">Уже готовы</option>
+              <option value="partial" selected>Есть часть</option>
+              <option value="none">Нужна помощь с нуля</option>
+            </select>
+          </div>
+          <div>
+            <label for="estimate-priority">Желаемый срок</label>
+            <select id="estimate-priority">
+              <option value="standard" selected>Стандартный</option>
+              <option value="soon">Как можно скорее</option>
+              <option value="flexible">Не срочно</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <aside class="project-estimator-result" aria-label="Предварительный результат расчёта">
+        <p class="eyebrow">ВАШ ПРОЕКТ</p>
+        <h3 id="estimate-kind">Лендинг</h3>
+        <span class="estimator-price-label">Стартовая стоимость</span>
+        <p class="estimator-price" id="estimate-price" aria-live="polite">от 5 000 ₽</p>
+        <p class="estimator-explanation" id="estimate-explanation">Стоимость уточняется после брифа.</p>
+        <ul class="estimator-summary" id="estimate-details">
+          <li>Страниц: 1</li>
+          <li>Дополнительно: без дополнительных функций</li>
+          <li>Часть материалов готова</li>
+          <li>Обычный срок</li>
+        </ul>
+        <div class="estimator-actions">
+          <a href="order.html?service=landing" id="estimate-link" class="btn">Перейти к заявке ↗</a>
+          <button type="button" class="btn btn-alt" id="estimate-copy">Скопировать параметры</button>
+        </div>
+        <p class="note" id="estimate-copy-status" role="status" aria-live="polite"></p>
+      </aside>
+    </div>
+    <p class="note estimator-disclaimer">Расчёт носит ознакомительный характер. Стартовые цены совпадают с тарифами на этой странице. Дополнительные функции и финальная цена согласуются индивидуально. Для видеомонтажа и дизайна стоимость рассчитывается после брифа.</p>
+  </section>
   <section class="svc project-guide-wrap" id="project-guide" aria-labelledby="guide-title">
     <div class="section-heading">
       <p class="eyebrow">PROJECT MATCH</p>
@@ -135,6 +198,7 @@
 <script src="assets/js/config.js"></script>
 <script src="assets/js/site.js"></script>
 <script src="assets/js/project-guide.js" defer></script>
+<script src="assets/js/project-estimator.js?v=1" defer></script>
 <style>
 .tqf.tqf{position:fixed!important;z-index:2147483646!important;right:16px!important;bottom:16px!important;
 left:auto!important;top:auto!important;inset-inline-start:auto!important;
