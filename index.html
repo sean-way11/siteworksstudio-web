@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@700;800&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
 <script src="assets/js/theme-init.js"></script>
-<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/styles.css?v=sws-lab-20261113">
 </head>
 <body data-page="home">
 <a class="skip" href="#main">Перейти к содержимому</a>
@@ -49,7 +49,7 @@
 </header>
 <main id="main" tabindex="-1">
 <section class="hero container">
-  <p class="eyebrow">DIGITAL · CREATIVE · STUDIO</p>
+  <p class="eyebrow hero-eyebrow">DIGITAL · CREATIVE · STUDIO <span class="hero-live"><span class="hero-live-dot" aria-hidden="true"></span> CREATIVE MODE ON</span></p>
   <h1>Создаём цифровые решения, <span class="hl">которые работают на вас</span></h1>
   <p>Современные сайты, видеомонтаж и графический дизайн — в едином визуальном стиле, с вниманием к деталям и вашей задаче.</p>
   <div class="btns">
@@ -61,6 +61,83 @@
   <div class="card"><p class="eyebrow">01 / WEB</p><h2>Создание сайтов</h2><p>Лендинги и сайты-визитки с адаптивной версткой и понятной структурой.</p><a href="services.html#sites">Подробнее <span aria-hidden="true">↗</span></a></div>
   <div class="card"><p class="eyebrow">02 / VIDEO</p><h2>Видеомонтаж</h2><p>Ролики для социальных сетей, выразительный монтаж, титры и ритм.</p><a href="services.html#video">Подробнее <span aria-hidden="true">↗</span></a></div>
   <div class="card"><p class="eyebrow">03 / DESIGN</p><h2>Графический дизайн</h2><p>Баннеры, карточки товаров и визуалы, которые поддерживают ваш бренд.</p><a href="services.html#design">Подробнее <span aria-hidden="true">↗</span></a></div>
+</section>
+<section class="container section sws-lab" id="sws-lab" data-sws-lab aria-labelledby="sws-lab-title">
+  <div class="sws-lab-shell">
+    <div class="sws-lab-top">
+      <div>
+        <p class="eyebrow">SWS LAB / ИНТЕРАКТИВНО</p>
+        <h2 id="sws-lab-title">Скучным сайтам — <span>нет.</span></h2>
+        <p>Не только рассказываем — показываем. Выберите направление и попробуйте наши демо прямо здесь.</p>
+      </div>
+      <span class="sws-lab-mark" aria-label="Интерактивные демо"><i aria-hidden="true"></i> EXPLORE THE STUDIO</span>
+    </div>
+    <div class="sws-lab-layout">
+      <div class="sws-lab-controls">
+        <div class="sws-lab-tabs" role="tablist" aria-label="Выбор направления студии">
+          <button type="button" class="sws-lab-tab is-active" id="sws-lab-tab-web" role="tab" aria-controls="sws-lab-panel-web" aria-selected="true" tabindex="0" data-lab-target="web"><strong><b>01</b> Сайты</strong><small>Интерфейсы, которые запоминаются</small></button>
+          <button type="button" class="sws-lab-tab" id="sws-lab-tab-video" role="tab" aria-controls="sws-lab-panel-video" aria-selected="false" tabindex="-1" data-lab-target="video"><strong><b>02</b> Видео</strong><small>Ритм, кадр, движение</small></button>
+          <button type="button" class="sws-lab-tab" id="sws-lab-tab-design" role="tab" aria-controls="sws-lab-panel-design" aria-selected="false" tabindex="-1" data-lab-target="design"><strong><b>03</b> Дизайн</strong><small>Визуал с характером</small></button>
+        </div>
+        <div class="sws-lab-actions">
+          <a class="btn" id="sws-lab-cta" href="order.html?service=landing">Обсудить сайт ↗</a>
+          <p>Каждый проект создаётся под задачу, а не по шаблону.</p>
+        </div>
+      </div>
+      <div>
+        <div class="sws-lab-stage">
+          <div class="sws-lab-panel" id="sws-lab-panel-web" role="tabpanel" aria-labelledby="sws-lab-tab-web" tabindex="0">
+            <div class="sws-demo-browser" aria-label="Демонстрационный макет сайта">
+              <div class="sws-demo-browser-top"><span class="sws-demo-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="sws-demo-url">preview / web experience</span><span aria-hidden="true">↗</span></div>
+              <div class="sws-demo-web-content">
+                <p class="sws-demo-web-kicker">DESIGNED FOR IMPACT</p>
+                <h3>Идея <em>становится</em> продуктом.</h3>
+                <p class="sws-demo-web-copy">Сильная структура, аккуратные детали и удобство на каждом экране.</p>
+                <span class="sws-demo-web-cta">Ваш проект ↗</span>
+                <div class="sws-demo-float" aria-hidden="true"><p>UI / EXPERIENCE</p><div class="sws-demo-bars"><i></i><i></i><i></i><i></i></div><small>✦ VISUAL SYSTEM</small></div>
+              </div>
+            </div>
+          </div>
+          <div class="sws-lab-panel" id="sws-lab-panel-video" role="tabpanel" aria-labelledby="sws-lab-tab-video" tabindex="0" hidden>
+            <div class="sws-demo-video" id="sws-lab-video">
+              <div class="sws-demo-video-screen" aria-label="Графический макет анимации">
+                <div class="sws-demo-video-orb" aria-hidden="true"></div><div class="sws-demo-video-overlay" aria-hidden="true"></div>
+                <p class="sws-demo-video-mark">MAKE IT<span>MOVE.</span></p>
+              </div>
+              <div class="sws-demo-video-bottom"><button type="button" class="sws-demo-play" id="sws-lab-play" aria-pressed="false" aria-label="Запустить демо-анимацию">▶ Смотреть демо</button><span>DEMO TIMELINE / 00:05</span></div>
+              <div class="sws-demo-timeline" aria-hidden="true">
+                <div class="sws-demo-track"><i></i><i></i><i></i></div>
+                <div class="sws-demo-track"><i></i><i></i><i></i></div>
+                <div class="sws-demo-track"><i></i><i></i><i></i></div>
+                <div class="sws-demo-playhead"></div>
+              </div>
+            </div>
+          </div>
+          <div class="sws-lab-panel" id="sws-lab-panel-design" role="tabpanel" aria-labelledby="sws-lab-tab-design" tabindex="0" hidden>
+            <div class="sws-demo-design" id="sws-lab-product">
+              <div class="sws-demo-product" aria-label="Демонстрационная карточка товара">
+                <div class="sws-demo-product-visual"><div class="sws-demo-product-orbit" aria-hidden="true"></div><div class="sws-demo-product-device" aria-hidden="true"></div></div>
+                <div class="sws-demo-product-copy">
+                  <span class="sws-demo-product-kicker">CONCEPT / 001</span>
+                  <h3>NOVA<br>ONE</h3>
+                  <p>Дизайн — это ощущение ещё до первого касания.</p>
+                  <div class="sws-demo-product-divider"></div>
+                  <span class="sws-demo-product-foot">PRODUCT VISUAL / STUDIO EDITION</span>
+                </div>
+              </div>
+              <div class="sws-demo-swatches" role="group" aria-label="Цвет демонстрационной карточки товара">
+                <span>Сменить акцент:</span>
+                <button type="button" class="sws-demo-swatch" style="--swatch:#69eff2" data-lab-color="cyan" aria-label="Бирюзовый" aria-pressed="true"></button>
+                <button type="button" class="sws-demo-swatch" style="--swatch:#ff9777" data-lab-color="coral" aria-label="Коралловый" aria-pressed="false"></button>
+                <button type="button" class="sws-demo-swatch" style="--swatch:#c3a7ff" data-lab-color="violet" aria-label="Лавандовый" aria-pressed="false"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="sws-lab-caption" id="sws-lab-caption">Концепт интерфейса • интерактивная визуализация</p>
+      </div>
+    </div>
+  </div>
 </section>
 <section class="container section home-portfolio" aria-labelledby="home-portfolio-title">
   <div class="home-portfolio-heading"><div><p class="eyebrow">SELECTED WORK</p><h2 id="home-portfolio-title">Работы и концепции</h2><p class="lead">Здесь собраны собственный проект студии и демонстрационные концепции, которые показывают наши направления и подход к работе.</p></div><a class="project-link" href="portfolio.html">Все концепции <span aria-hidden="true">↗</span></a></div>
@@ -84,6 +161,7 @@
   <div class="container"><p>SiteWorksStudio · <a href="https://t.me/SiteWorksStudio" target="_blank" rel="noopener noreferrer">Telegram @SiteWorksStudio</a></p></div>
 </footer>
 <script src="assets/js/config.js"></script>
+<script src="assets/js/experience-lab.js?v=1" defer></script>
 <script src="assets/js/site.js"></script>
 <style>
 .tqf.tqf{position:fixed!important;z-index:2147483646!important;right:16px!important;bottom:16px!important;
