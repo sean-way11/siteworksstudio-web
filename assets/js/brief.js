@@ -381,9 +381,9 @@ function initOrderPage() {
     preview.value = buildMessage(brief);
     result.hidden = false;
     var long = updateSendLink();
-    status.textContent = "Проверьте текст. Нажмите «Отправить заявку владельцу», чтобы передать бриф в Telegram. Либо откройте Telegram вручную.";
+    status.textContent = "Проверьте текст и нажмите «Отправить заявку». Мы получим её в SiteWorksStudio OS.";
     submitLead.disabled = false;
-    submitLead.textContent = "Отправить заявку владельцу";
+    submitLead.textContent = "Отправить заявку";
     result.scrollIntoView({ block: "nearest" });
   });
 
@@ -493,7 +493,7 @@ function initOrderPage() {
     if (!saveDraftToggle || !saveDraftToggle.checked) return;
     try {
       localStorage.setItem(DRAFT_KEY, JSON.stringify({ version: 1, savedAt: new Date().toISOString(), values: draftValues() }));
-      setDraftStatus("Черновик сохранён на этом устройстве. Он не отправляется на сервер, пока вы не нажмёте «Отправить заявку владельцу».");
+      setDraftStatus("Черновик сохранён на этом устройстве. Он не отправляется на сервер, пока вы не нажмёте «Отправить заявку».");
     } catch (e) {
       setDraftStatus("Браузер не разрешил сохранить черновик. Продолжайте заполнять форму — отправка заявки работает отдельно.");
     }
