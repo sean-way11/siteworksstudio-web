@@ -67,6 +67,9 @@ var BRIEF_SCHEMA = [
     hint: "Необязательно. Можно указать диапазон." },
   { id: "deadline", label: "Когда нужен результат", summaryLabel: "Срок",
     type: "select", required: false, options: DEADLINES },
+  { id: "scope", label: "Параметры проекта и пожелания", summaryLabel: "Параметры проекта",
+    type: "textarea", required: false, maxLength: 600, always: true,
+    hint: "Необязательно. Если вы пришли из конструктора сайта, параметры появятся здесь автоматически." },
   { id: "contact", label: "Как с вами связаться", summaryLabel: "Связь",
     type: "text", required: true, maxLength: 80,
     hint: "Обязательно: @Telegram, телефон или e-mail. Иначе мы не сможем ответить." }
@@ -539,6 +542,13 @@ function initOrderPage() {
     }
   } catch (e) {
     setDraftStatus("Не удалось восстановить черновик. Проверьте поля и продолжайте заполнять форму.");
+  }
+
+  // Параметры из конструктора — отдельное редактируемое поле.
+  // Не затрагиваем ответы на вопросы о бизнесе или описание проекта.
+  var scopeFromEstimator = params.get("scope");
+  if (scopeFromEstimator && $("f-scope")) {
+    $("f-scope").value = cleanText(scopeFromEstimator, 550);
   }
 
   // Экспорт брифа в обычный TXT: удобно сохранить или приложить к переписке.
