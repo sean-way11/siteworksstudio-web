@@ -88,7 +88,7 @@
       (materialsLabels[material.value] || materialsLabels.partial) + ". " +
       (priorityLabels[priority.value] || priorityLabels.standard) + ". " +
       "Цена: " + baseline + " (не окончательная).";
-    link.href = "order.html?service=" + encodeURIComponent(service) + "&briefNote=" + encodeURIComponent(lastText.slice(0,445));
+    link.href = "order.html?service=" + encodeURIComponent(service) + "&scope=" + encodeURIComponent(lastText.slice(0,550));
     if (status) status.textContent = "";
   }
   function legacyCopy(value) {
