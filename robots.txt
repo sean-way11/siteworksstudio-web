@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://siteworksstudio.ru/sitemap.xml
