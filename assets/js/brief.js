@@ -381,7 +381,7 @@ function initOrderPage() {
     preview.value = buildMessage(brief);
     result.hidden = false;
     var long = updateSendLink();
-    status.textContent = "Проверьте текст и нажмите «Отправить заявку». Мы получим её в SiteWorksStudio OS.";
+    status.textContent = "Проверьте текст и нажмите «Отправить заявку».";
     submitLead.disabled = false;
     submitLead.textContent = "Отправить заявку";
     result.scrollIntoView({ block: "nearest" });
@@ -410,7 +410,7 @@ function initOrderPage() {
     var serviceName = chosen ? chosen.title : brief.service;
     submitLead.disabled = true;
     submitLead.textContent = "Отправляем…";
-    status.textContent = "Сохраняем заявку в SiteWorksStudio OS…";
+    status.textContent = "Отправляем…";
     try {
       var response = await fetch("https://aysvovhvsttfjfhigbjt.supabase.co/functions/v1/sws-public-site-lead", {
         method: "POST",
@@ -429,7 +429,7 @@ function initOrderPage() {
       if (!response.ok || !answer || answer.ok !== true) {
         throw new Error(answer && answer.error ? answer.error : "HTTP " + response.status);
       }
-      status.textContent = "✅ Заявка сохранена в SiteWorksStudio OS! Мы свяжемся с вами по указанному контакту.";
+      status.textContent = "✅ Заявка отправлена! Мы свяжемся с вами по указанному контакту.";
       submitLead.textContent = "Заявка отправлена ✓";
       removeDraft("Черновик удалён после успешной отправки.");
     } catch (err) {
