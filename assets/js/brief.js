@@ -89,6 +89,24 @@ function isVisible(f, svc) {
   return !f.services || f.services.indexOf(svc) !== -1;
 }
 
+function createSubmissionTracker(makeId) {
+  var currentId = null;
+  var currentPayload = null;
+  return {
+    idFor: function (payload) {
+      if (!currentId || currentPayload !== payload) {
+        currentId = makeId();
+        currentPayload = payload;
+      }
+      return currentId;
+    },
+    reset: function () {
+      currentId = null;
+      currentPayload = null;
+    }
+  };
+}
+
 // Убираем «одинокие» половинки эмодзи (иначе encodeURIComponent выдаёт ошибку).
 function stripLoneSurrogates(s) {
   s = String(s);
@@ -393,7 +411,7 @@ function initOrderPage() {
 
   // Публичная форма GitHub Pages: прием на выделенный Supabase endpoint студии.
   // Секреты и доступ к базе находятся только на сервере. Повтор не создаёт дубли.
-  var siteSubmissionId = null;
+  var submissionTracker = createSubmissionTracker(function () { return crypto.randomUUID(); });
   submitLead.addEventListener("click", async function () {
     var message = preview.value.trim();
     var brief = readForm();
@@ -408,9 +426,10 @@ function initOrderPage() {
       form.scrollIntoView({ block: "start" });
       return;
     }
-    if (!siteSubmissionId) siteSubmissionId = crypto.randomUUID();
     var chosen = optionById(brief.service);
     var serviceName = chosen ? chosen.title : brief.service;
+    var submissionPayload = JSON.stringify([brief.name, serviceName, brief.contact, message]);
+    var siteSubmissionId = submissionTracker.idFor(submissionPayload);
     submitLead.disabled = true;
     submitLead.textContent = "Отправляем…";
     status.textContent = "Отправляем…";
@@ -425,7 +444,7 @@ function initOrderPage() {
           message: message,
           source: location.pathname,
           _request_id: siteSubmissionId,
-          website: ""
+          website: form.elements.website ? form.elements.website.value : ""
         })
       });
       var answer = await response.json().catch(function () { return null; });
@@ -434,6 +453,7 @@ function initOrderPage() {
       }
       status.textContent = "✅ Заявка отправлена! Мы свяжемся с вами по указанному контакту.";
       submitLead.textContent = "Заявка отправлена ✓";
+      submissionTracker.reset();
       removeDraft("Черновик удалён после успешной отправки.");
     } catch (err) {
       // Клиенту показываем только понятный результат, а не внутренние сообщения сервера.

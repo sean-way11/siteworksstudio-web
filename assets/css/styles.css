@@ -228,7 +228,8 @@ input,select,textarea{background:#041F3D;color:#EAFBFF;border-color:rgba(0,230,2
 .step{color:#00E6F5;font:700 1rem/1.2 Geologica,sans-serif;letter-spacing:.14em}
 .cta-panel{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:28px;padding:clamp(24px,4vw,42px);border:1px solid rgba(0,230,245,.28);border-radius:22px;background:radial-gradient(ellipse at 90% 50%,rgba(0,230,245,.10),transparent 50%),#062344}.cta-panel h2{margin-bottom:8px}.cta-panel p{margin:0;color:#A7C8D9}
 @media(max-width:699px){.intro-grid{grid-template-columns:1fr}.intro-grid .card{min-height:0}.cta-panel{align-items:flex-start;flex-direction:column}.cta-panel .btn{width:100%}}
-\n/* Logo sizing: full official mark in header/footer; no cropping. */\n@media(max-width:420px){.logo{gap:8px;font-size:15px}.logo .brand-mark{width:48px;height:28px;flex-basis:48px}}\n
+/* Logo sizing: full official mark in header/footer; no cropping. */
+@media(max-width:420px){.logo{gap:8px;font-size:15px}.logo .brand-mark{width:48px;height:28px;flex-basis:48px}}
 
 /* Honeypot field: hidden from people, used as a lightweight spam trap. */
 .form-trap { position: absolute !important; left: -10000px !important; top: auto !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
