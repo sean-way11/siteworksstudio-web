@@ -46,15 +46,11 @@ var CONFIG = {
 
   // Единое меню на всех страницах (рисуется в site.js).
   nav: [
-    { id: "home", label: "Главная", href: "index.html" },
-    { id: "services", label: "Услуги и цены", href: "services.html", children: [
-      { label: "Создание сайтов", href: "services.html#sites" },
-      { label: "Видеомонтаж", href: "services.html#video" },
-      { label: "Графический дизайн", href: "services.html#design" }
-    ] },
-    { id: "portfolio", label: "Портфолио", href: "portfolio.html" },
-    { id: "order", label: "Заказать услугу", href: "order.html" },
-    { id: "about", label: "О студии и FAQ", href: "about.html" }
+    { id: "portfolio", label: "Работы", href: "portfolio.html" },
+    { id: "services", label: "Услуги", href: "services.html" },
+    { id: "demos", label: "Демо", href: "demos.html" },
+    { id: "articles", label: "Статьи", href: "articles.html" },
+    { id: "prices", label: "Цены", href: "prices.html" }
   ],
 
   // Тарифы на сайты. Цены и сроки согласованы: «от», срок ориентировочный.

@@ -268,7 +268,7 @@ footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-s
 <section class="hero">
  <div class="wrap hero-inner">
   <p class="eyebrow">Digital · Creative · Studio</p>
-  <h1>Сайты, дизайн и видео<br><span>для твоих идей.</span></h1>
+  <h1>Сайты, дизайн и видео<br><span>для ваших идей.</span></h1>
   <p class="hero-copy">Создаём лендинги, карточки товаров, обложки и визуальные материалы для проектов. Обсудим задачу и подберём подходящий формат работы.</p>
   <div class="hero-actions"><a class="nav-link primary" href="https://t.me/SiteWorksStudio">Написать в Telegram <span aria-hidden="true">↗</span></a><a class="nav-link" href="#main">Посмотреть работы <span aria-hidden="true">↓</span></a></div>
   <div class="hero-meta"><span class="meta-chip">Web · Landing pages</span><span class="meta-chip">Design · Marketplace</span><span class="meta-chip">Video · Social</span></div>
@@ -277,7 +277,7 @@ footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-s
 <main class="wrap" id="main">
  <section class="portfolio-section">
   <div class="section-head"><h2>Портфолио работ</h2><p>Демонстрационные кейсы по направлениям студии</p></div>
-  <p class="portfolio-intro">Выбери направление, чтобы посмотреть примеры. Здесь представлены самостоятельные демонстрационные концепции: макеты сайтов, графики и видео, а не готовые клиентские проекты.</p>
+  <p class="portfolio-intro">Выберите направление, чтобы посмотреть примеры. Здесь представлены самостоятельные демонстрационные концепции: макеты сайтов, графики и видео, а не готовые клиентские проекты.</p>
   <nav class="portfolio-filters" aria-label="Фильтр портфолио">
    <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">Все работы</button>
    <button class="filter-btn" type="button" data-filter="youtube" aria-pressed="false">YouTube</button>
@@ -466,7 +466,7 @@ footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-s
 </main>
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр работы">
  <button class="lightbox-close" type="button" aria-label="Закрыть просмотр">×</button>
- <img src="" alt="">
+ <img alt="">
  <div class="lightbox-caption"></div>
 </div>
 <footer><div class="wrap foot"><span>© 2026 SiteWorksStudio · Digital portfolio</span><a href="https://siteworksstudio.ru/">siteworksstudio.ru ↗</a></div></footer>
@@ -478,7 +478,7 @@ footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-s
  let lastOpener = null;
  const close = () => {
    box.classList.remove('open');
-   preview.src = '';
+   preview.removeAttribute('src');
    document.body.style.overflow = '';
    if (lastOpener) lastOpener.focus();
  };
@@ -502,7 +502,14 @@ footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-s
  });
  box.querySelector('.lightbox-close').addEventListener('click', close);
  box.addEventListener('click', e => { if (e.target === box) close(); });
- document.addEventListener('keydown', e => { if (e.key === 'Escape' && box.classList.contains('open')) close(); });
+ document.addEventListener('keydown', e => {
+   if (!box.classList.contains('open')) return;
+   if (e.key === 'Escape') close();
+   if (e.key === 'Tab') {
+     e.preventDefault();
+     box.querySelector('.lightbox-close').focus();
+   }
+ });
 })();
 </script>
 

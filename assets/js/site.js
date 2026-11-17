@@ -182,6 +182,26 @@
   }
 
   /* ---------- Подвал ---------- */
+  function buildMobileNav() {
+    var nav = el("nav", { "class": "sws-mobile-nav", "aria-label": "Быстрые ссылки" });
+    var items = [
+      { id: "home", label: "Главная", href: "index.html" },
+      CONFIG.nav.find(function (item) { return item.id === "portfolio"; }),
+      CONFIG.nav.find(function (item) { return item.id === "demos"; }),
+      CONFIG.nav.find(function (item) { return item.id === "prices"; }),
+      CONFIG.nav.find(function (item) { return item.id === "articles"; }),
+      { id: "order", label: "Связь", href: CONFIG.cta.href }
+    ];
+    var page = document.body.getAttribute("data-page");
+    items.filter(Boolean).forEach(function (item) {
+      var link = el("a", { href: item.href }, item.label);
+      if (item.id === page && new URL(link.href).pathname === location.pathname) link.setAttribute("aria-current", "page");
+      nav.appendChild(link);
+    });
+    document.body.appendChild(nav);
+    document.body.classList.add("has-sws-mobile-nav");
+  }
+
   function buildFooter() {
     var host = document.getElementById("site-footer");
     if (!host) return;
@@ -205,7 +225,10 @@
     c3.appendChild(el("p", { "class": "foot-h" }, "Связь"));
     var p = el("p"), a = el("a", { href: "https://t.me/" + CONFIG.telegram.username, target: "_blank", rel: "noopener noreferrer" }, "Telegram @" + CONFIG.telegram.username);
     p.appendChild(a); c3.appendChild(p);
-    c3.appendChild(el("p", { "class": "note" }, "Используйте форму заказа для отправки брифа. Если автоматическая отправка временно недоступна, сайт предложит открыть Telegram вручную или скопировать текст."));
+    var email = el("p");
+    email.appendChild(el("a", { href: "mailto:hello@siteworksstudio.ru" }, "hello@siteworksstudio.ru"));
+    c3.appendChild(email);
+    c3.appendChild(el("p", { "class": "note" }, "Расскажите о задаче в брифе или напишите напрямую. После заявки уточним детали и предложим состав работы."));
     wrap.appendChild(c3);
     host.appendChild(wrap);
   }
@@ -234,6 +257,7 @@
     buildHeader();
     buildSiteNotice();
     buildFooter();
+    buildMobileNav();
     fillConfig();
     propagateTheme();
     window.addEventListener("storage", function (e) {   // синхронизация между вкладками
