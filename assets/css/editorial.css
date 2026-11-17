@@ -241,3 +241,75 @@ body[data-page="order"] .order-next {
   font: 800 clamp(2.1rem, 4vw, 3.4rem)/1 Geologica, sans-serif;
 }
 .sws-feature-publication span { color: #a7c8d9; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  ::view-transition-old(root) {
+    animation: sws-page-out 150ms ease-in both;
+  }
+  ::view-transition-new(root) {
+    animation: sws-page-in 250ms cubic-bezier(.2, .7, .3, 1) both;
+  }
+
+  .btn {
+    transition: background-color 180ms ease, color 180ms ease,
+      border-color 180ms ease, transform 180ms cubic-bezier(.2, .7, .3, 1);
+  }
+  .btn:active:not([aria-disabled="true"]) { transform: scale(.98); }
+  .card, .project-card, .sws-feature-card, .home-hero-preview {
+    transition: border-color 200ms ease;
+  }
+  .home-project-preview img, .project-art-screenshot img, .demo-card img {
+    transition: transform 280ms cubic-bezier(.2, .7, .3, 1);
+  }
+  .sws-lab-panel:not([hidden]), .faq-list details[open] > p {
+    animation: sws-reveal 220ms cubic-bezier(.2, .7, .3, 1) both;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .home-project-preview:hover img, .project-card:hover .project-art-screenshot img,
+  .demo-card:hover img {
+    transform: scale(1.025);
+  }
+  .home-hero-preview:hover { border-color: #537b8d; }
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 1179px) {
+  .site-nav.open {
+    animation: sws-reveal 210ms cubic-bezier(.2, .7, .3, 1) both;
+  }
+
+  @supports (transition-behavior: allow-discrete) {
+    .site-nav {
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: opacity 190ms ease, transform 190ms cubic-bezier(.2, .7, .3, 1),
+        display 190ms allow-discrete;
+    }
+    .site-nav.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      animation: none;
+    }
+    @starting-style {
+      .site-nav.open { opacity: 0; transform: translateY(-6px); }
+    }
+  }
+}
+
+@keyframes sws-page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sws-page-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes sws-reveal {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
