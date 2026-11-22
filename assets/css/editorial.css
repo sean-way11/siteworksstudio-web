@@ -281,24 +281,8 @@ body[data-page="order"] .order-next {
     animation: sws-reveal 210ms cubic-bezier(.2, .7, .3, 1) both;
   }
 
-  @supports (transition-behavior: allow-discrete) {
-    .site-nav {
-      opacity: 0;
-      transform: translateY(-6px);
-      pointer-events: none;
-      transition: opacity 190ms ease, transform 190ms cubic-bezier(.2, .7, .3, 1),
-        display 190ms allow-discrete;
-    }
-    .site-nav.open {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-      animation: none;
-    }
-    @starting-style {
-      .site-nav.open { opacity: 0; transform: translateY(-6px); }
-    }
-  }
+  /* Close immediately so hidden links leave keyboard navigation at once.
+     Entry animation works without discrete display-transition support. */
 }
 
 @keyframes sws-page-in {
