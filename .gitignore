@@ -1,0 +1,7 @@
+node_modules/
+.qa-artifacts/
+.qa-tools/
+.env
+.env.*
+!.env.example
+__pycache__/

@@ -1,0 +1,15 @@
+{
+  "name": "siteworksstudio-web-quality",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Development checks for the static SiteWorksStudio site; no production build required",
+  "scripts": {
+    "test": "npm run test:static && node tests/submission-tracker.test.cjs && npm run test:browser",
+    "test:static": "python3 .github/scripts/qa/check-static.py",
+    "test:browser": "node .github/scripts/qa/run-browser.cjs",
+    "test:cloud": "node .github/scripts/qa/run-cloud.cjs",
+    "watch:pr": "node .github/scripts/qa/watch-pr.cjs"
+  },
+  "engines": { "node": ">=22" },
+  "devDependencies": { "playwright": "1.65.1" }
+}
