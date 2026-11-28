@@ -8,7 +8,9 @@
 
 Форма заказов использует Supabase Edge Function `sws-public-site-lead`; контрольная заявка 14 ноября дошла до заказа в OS. Доставка Telegram-уведомления не подтверждена.
 
-SiteWorksStudio OS работает отдельно: https://siteworksstudio-os-layero-free.layero.app/
+SiteWorksStudio OS работает отдельно: https://os.siteworksstudio.ru/
+
+Старые пути `/admin`, `/admin/` и `/admin.html` переводят на рабочую панель OS. Адрес Layero больше не используется для входа.
 
 ## Работа 14 ноября 2026
 
