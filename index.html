@@ -15,11 +15,25 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "SiteWorksStudio",
-  "url": "https://siteworksstudio.ru/",
-  "logo": "https://siteworksstudio.ru/assets/img/siteworksstudio-logo.png",
-  "description": "Создание сайтов, видеомонтаж и графический дизайн."
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://siteworksstudio.ru/#organization",
+      "name": "SiteWorksStudio",
+      "url": "https://siteworksstudio.ru/",
+      "logo": "https://siteworksstudio.ru/assets/img/siteworksstudio-logo.png",
+      "description": "Создание сайтов, видеомонтаж и графический дизайн.",
+      "sameAs": ["https://t.me/SiteWorksStudio_bot"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://siteworksstudio.ru/#website",
+      "name": "SiteWorksStudio",
+      "url": "https://siteworksstudio.ru/",
+      "inLanguage": "ru-RU",
+      "publisher": {"@id": "https://siteworksstudio.ru/#organization"}
+    }
+  ]
 }
 </script>
 <meta name="theme-color" content="#031A35">
