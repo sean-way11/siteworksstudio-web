@@ -14,6 +14,9 @@ async function checkSite({ page, baseUrl, paths }) {
     catch (e) { checks.push({ name, passed: false, error: e.message }); }
   };
   const origin = new URL(baseUrl).origin;
+  const osUrl = 'https://os.siteworksstudio.ru/';
+  const redirects = new Set(['admin.html', 'admin/index.html']);
+  let checkingRedirect = false;
   let allowMockLead = false;
   page.setDefaultTimeout(6000);
   page.setDefaultNavigationTimeout(20000);
@@ -22,6 +25,11 @@ async function checkSite({ page, baseUrl, paths }) {
   // create a real order or send a Telegram message. Test only synthetic data.
   await page.context().route('**/*', async route => {
     const request = route.request();
+    // Verify legacy redirects without depending on the OS login application.
+    if (checkingRedirect && request.isNavigationRequest() && request.url() === osUrl) {
+      return route.fulfill({ status: 200, contentType: 'text/html',
+        body: '<!doctype html><title>OS redirect target</title><main>OS redirect target</main>' });
+    }
     if (['GET', 'HEAD'].includes(request.method())) return route.continue();
     const url = new URL(request.url());
     if (allowMockLead && url.origin === 'https://aysvovhvsttfjfhigbjt.supabase.co' &&
@@ -45,6 +53,15 @@ async function checkSite({ page, baseUrl, paths }) {
   for (const width of [390, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     for (const path of paths) await record(`${width}px ${path}`, async () => {
+      if (redirects.has(path)) {
+        checkingRedirect = true;
+        try {
+          await page.goto(new URL(path, baseUrl).href, { waitUntil: 'domcontentloaded' });
+          await page.waitForURL(osUrl, { waitUntil: 'domcontentloaded' });
+          assert(await page.title() === 'OS redirect target', 'Legacy admin link did not reach the OS');
+        } finally { checkingRedirect = false; }
+        return;
+      }
       await visit(path);
       assert((await page.title()).trim(), 'Missing title');
       assert(await page.locator('main').count() > 0, 'Missing main content');
@@ -134,3 +151,4 @@ async function checkSite({ page, baseUrl, paths }) {
     realLeadRequests: 0, blockedWrites, runtimeErrors: errors };
 }
 module.exports = { checkSite };
+
