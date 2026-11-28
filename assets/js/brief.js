@@ -178,6 +178,7 @@ function validateBrief(brief) {
     var v = brief[f.id];
     var empty = Array.isArray(v) ? v.length === 0 : !v;
     if (f.required && empty) { errors[f.id] = f.type === "select" ? "Выберите вариант" : "Заполните это поле"; return; }
+    if (f.id === "name" && !empty && v.length < 2) { errors[f.id] = "Укажите имя: минимум 2 символа"; return; }
     if (f.id === "contact" && !empty && v.length < 4) { errors[f.id] = "Укажите контакт для ответа"; return; }
     if (f.type === "select" && !empty) {
       var allowed = f.optionsFrom === "orders" ? CONFIG.orderOptions : f.options;
@@ -185,6 +186,12 @@ function validateBrief(brief) {
     }
   });
   return errors;
+}
+
+function submissionErrorMessage(status) {
+  if (status === 400) return "Проверьте данные: имя — минимум 2 символа, контакт — минимум 4. Исправьте поля и составьте бриф ещё раз.";
+  if (status === 429) return "Слишком много заявок за короткое время. Попробуйте позже или свяжитесь с нами через Telegram.";
+  return "Не удалось отправить заявку. Попробуйте ещё раз или отправьте её через Telegram.";
 }
 
 function formatValue(f, v) {
@@ -421,7 +428,13 @@ function initOrderPage() {
     }
     var errors = validateBrief(brief);
     if (Object.keys(errors).length) {
-      status.textContent = "Проверьте контакт для связи и другие обязательные поля, затем составьте бриф ещё раз.";
+      status.textContent = "Проверьте обязательные поля, затем составьте бриф ещё раз.";
+      Object.keys(errors).forEach(function (id) {
+        var err = document.getElementById("err-" + id);
+        err.textContent = errors[id];
+        err.hidden = false;
+        form.querySelectorAll('[name="' + id + '"]').forEach(function (c) { c.setAttribute("aria-invalid", "true"); });
+      });
       result.hidden = true;
       form.scrollIntoView({ block: "start" });
       return;
@@ -449,7 +462,9 @@ function initOrderPage() {
       });
       var answer = await response.json().catch(function () { return null; });
       if (!response.ok || !answer || answer.ok !== true) {
-        throw new Error(answer && answer.error ? answer.error : "HTTP " + response.status);
+        var requestError = new Error("Lead submission failed");
+        requestError.status = response.status;
+        throw requestError;
       }
       status.textContent = "✅ Заявка отправлена! Мы свяжемся с вами по указанному контакту.";
       submitLead.textContent = "Заявка отправлена ✓";
@@ -457,7 +472,7 @@ function initOrderPage() {
       removeDraft("Черновик удалён после успешной отправки.");
     } catch (err) {
       // Клиенту показываем только понятный результат, а не внутренние сообщения сервера.
-      status.textContent = "Не удалось отправить заявку. Попробуйте ещё раз или отправьте её через Telegram.";
+      status.textContent = submissionErrorMessage(err.status);
       submitLead.disabled = false;
       submitLead.textContent = "Повторить отправку";
     }
